@@ -261,6 +261,17 @@ peers.on('connection', async socket => {
   })
 })
 
+let listenip;
+let announceip;
+if (process.platform === "linux") {
+  listenip = "172.31.40.255";
+  announceip = "3.39.21.142";
+} else {
+  listenip = "127.0.0.1";
+  announceip = null;
+}
+console.log("🎧 listenip is : ", listenip);
+
   //(4), (6)
 const createWebRtcTransport = async (callback) => {
   try {
@@ -268,8 +279,8 @@ const createWebRtcTransport = async (callback) => {
     const webRtcTransport_options = {
       listenIps: [
         {
-          ip: '127.0.0.1', //'172.25.144.1', // replace with relevant IP address
-          //announcedIp: '127.0.0.1',
+          ip: listenip,
+          announceIp: announceip
         }
       ],
       enableUdp: true,
