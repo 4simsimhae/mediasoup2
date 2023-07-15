@@ -29,7 +29,7 @@ app.use(
     cors({
         origin: [
             'https://simsimhae.store',
-            'http://localhost:3000',
+            'https://localhost:3000',
             'https://front-black-delta.vercel.app',
             'https://testmedia.vercel.app',
         ],
@@ -52,7 +52,7 @@ const io = new Server(httpsServer, {
   cors: {
     origin: [
         'https://simsimhae.store',
-        'http://localhost:3000',
+        'https://localhost:3000',
         'https://front-black-delta.vercel.app',
         'https://testmedia.vercel.app',
     ],
