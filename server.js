@@ -14,11 +14,11 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use("/peerjs", peerServer);
 
-app.get("/sfu", (req, rsp) => {
-  rsp.redirect(`/sfu/${uuidv4()}`);
+app.get("/", (req, rsp) => {
+  rsp.redirect(`/${uuidv4()}`);
 });
 
-app.get("/sfu/:room", (req, res) => {
+app.get("/:room", (req, res) => {
   res.render("room", { roomId: req.params.room });
 });
 
