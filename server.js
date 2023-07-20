@@ -14,11 +14,11 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use("/peerjs", peerServer);
 
-app.get("/", (req, rsp) => {
-  rsp.redirect(`/${uuidv4()}`);
+app.get("/sfu", (req, rsp) => {
+  rsp.redirect(`/sfu/${uuidv4()}`);
 });
 
-app.get("/:room", (req, res) => {
+app.get("/sfu/:room", (req, res) => {
   res.render("room", { roomId: req.params.room });
 });
 
@@ -33,4 +33,4 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(process.env.PORT || 3030);
+server.listen(process.env.PORT || 3000);
