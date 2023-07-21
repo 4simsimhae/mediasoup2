@@ -1,13 +1,38 @@
 const express = require("express");
 const app = express();
-const server = require("http").Server(app);
+const https = require('httpolyglot');
+const fs = require('fs');
+// const server = require("http").Server(app);
 const { v4: uuidv4 } = require("uuid");
-const io = require("socket.io")(server);
+
+// SSL cert for HTTPS access
+const options = {
+  key: fs.readFileSync('./server/ssl/key.pem', 'utf-8'),
+  cert: fs.readFileSync('./server/ssl/cert.pem', 'utf-8')
+  }
+
+const httpsServer = https.createServer(options, app)
+httpsServer.listen(3000, () => {
+  console.log('listening on port: ' + 3000)
+})
+
 // Peer
 
 const { ExpressPeerServer } = require("peer");
-const peerServer = ExpressPeerServer(server, {
+const peerServer = ExpressPeerServer(httpsServer, {
   debug: true,
+});
+
+const io = require('socket.io')(httpsServer, {
+  cors: {
+      origin: [
+          'https://simsimhae.store',
+          'http://localhost:3000',
+          'https://front-black-delta.vercel.app',
+          'https://testmedia.vercel.app',
+      ],
+      credentials: true,
+  },
 });
 
 app.set("view engine", "ejs");
@@ -33,4 +58,4 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(process.env.PORT || 3000);
+// server.listen(process.env.PORT || 3000);
